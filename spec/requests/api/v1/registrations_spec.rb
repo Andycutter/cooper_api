@@ -51,5 +51,4 @@ RSpec.describe 'User Registration', type: :request do
             expect(response.status).to eq 422
         end
     end
-
 end
