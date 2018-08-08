@@ -41,14 +41,14 @@ RSpec.describe 'User Registration', type: :request do
             FactoryBot.create(:user, email: 'example@craftacademy.se',
                                         password: 'password',
                                         password_confirmation: 'password')
-            post '/api/vi/auth', params: {
+            post '/api/v1/auth', params: {
                 email: 'example@craftacademy.se', 
                 password: 'password',
                 password_confirmation: 'password'
             },  headers: headers
 
-            expect(response_json['errors']['email']).to eq ['already in use']
-            expect(reponse.status).to eq 422
+            expect(response_json['errors']['email']).to eq ['has already been taken']
+            expect(response.status).to eq 422
         end
     end
 
