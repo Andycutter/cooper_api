@@ -23,6 +23,19 @@ RSpec.describe Api::V1::PerformanceDataController, type: :request do
           get '/api/v1/performance_data', headers: headers
           expect(response_json['entries'].count).to eq 5
         end
+
+        it 'returns specific user performance data for current user' do
+            get '/api/v1/performance_data', headers: headers
+            current_user_entry = PerformanceData.last
+            expected_response = {
+                'user_id' => current_user_entry.user.id,
+                'id' => current_user_entry.id,
+                'data' => current_user_entry.data,
+                'created_at' => current_user_entry.created_at.iso8601(3),
+                'updated_at' => current_user_entry.updated_at.iso8601(3)
+            }
+            expect(response_json['entries'].last).to eq expected_response
+        end
     end
 
 end
